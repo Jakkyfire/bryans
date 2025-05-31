@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Website with Sidebar</title>
+    <style>
+        /* Reset and base styles */
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+            background-color: ;
+        }
+
+        /* Top bar styles */
+        .navbar {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: space-around;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            transition: opacity 0.001s ease, transform 0.001s ease;
+            overflow: hidden;
+            border: none;
+            box-shadow: none;
+            margin-top: -20px;
+            border-radius: 9px;
+            margin-left: -10px;
+            margin-right: -10px;
+        }
+
+        .navbar.hidden {
+            opacity: 0;
+            transform: translateY(-100%);
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+        }
+
+        .navbar a:hover {
+            background-color: #575757;
+            border-radius: 5px;
+        }
+
+        /* Sidebar styles for laptops */
+        @media (min-width: 1024px) {
+            body {
+                flex-direction: row;
+            }
+
+            .sidebar {
+                width: 60px;
+                background-color: #333;
+                color: white;
+                transition: width 0.3s ease, background-color 0.3s ease, opacity 0.5s ease, transform 0.5s ease;
+                overflow: hidden;
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                z-index: 5;
+                margin-left: -224px;
+                margin-top: 10px;
+                margin-bottom: 10px;
+                height: 96.9%;
+                border-radius: 7px;
+            }
+
+            .sidebar.hidden {
+                opacity: 0;
+                transform: translateX(-100%);
+            }
+
+            .sidebar:hover {
+                width: 200px;
+            }
+
+            .sidebar:hover ~ .content {
+                filter: blur(5px);
+            }
+
+            .sidebar a {
+                color: white;
+                text-decoration: none;
+                padding: 15px;
+                display: block;
+                text-align: center;
+                width: 100%;
+            }
+
+            .sidebar a:hover {
+                background-color: #575757;
+            }
+        }
+
+        /* Page content styles */
+        .content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 1px;
+            height: 100%;
+            width: 97.6%;
+            margin-top: -10px;
+            border-radius: 10px;
+            margin-left: -15px;
+            margin-right: -10px;
+            margin-top: -14px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @media (min-width: 1024px) {
+            .tab-content {
+                display: none;
+                padding: 1px;
+                height: 98%;
+                width: 96.6%;
+                margin-top: -14px;
+                border-radius: 8px;
+                margin-left: -10px;
+            }
+        }
+
+        #home {
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        #about {
+            background-color: #eaeaea;
+            padding: 20px;
+        }
+
+        #contact {
+            background-color: #dcdcdc;
+            padding: 90px;
+        }
+
+        /* Profile styles */
+        .card {
+            background: white;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(1, 0, 5, 0);
+            text-align: center;
+            
+            width: 93%;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            translateY(-5px);
+        }
+
+        #profileImage {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border: 4px solid #4285F4;
+            transition: all 0.3s ease;
+        }
+
+        input[type="file"],
+        input[type="text"] {
+            margin-top: 15px;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        input[type="file"]:hover,
+        input[type="text"]:hover {
+            border-color: #4285F4;
+        }
+
+        @media (max-width: 500px) {
+            .card {
+                padding: 20px;
+            }
+
+            #profileImage {
+                width: 120px;
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <a href="#" class="nav-link" data-tab="home">Home</a>
+        <a href="#" class="nav-link" data-tab="about">About</a>
+        <a href="#" class="nav-link" data-tab="contact">Contact</a>
+    </div>
+
+    <!-- Sidebar for laptops -->
+    <div class="sidebar">
+        <a href="#" class="nav-link" data-tab="home">Home</a>
+        <a href="#" class="nav-link" data-tab="about">About</a>
+        <a href="#" class="nav-link" data-tab="contact">Contact</a>
+       
+        <a href="#" class="nav-link" data-tab="profile">Profile Settings</a>
+    </div>
+
+    <div class="content">
+        <div id="home" class="tab-content active">
+            <div class="card">
+                <h1>Welcome, <span id="usernameDisplay">User</span>!</h1>
+                <img id="profileImage" src="" alt="Profile Image" />
+                <br />
+<hr>
+                <br>
+                <img src="data:image/jpeg;base64,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"><br>
+                <p>play turbo warp</p>
+            </div>
+        </div>
+
+        <div id="about" class="tab-content">
+            <h2>About</h2>
+            <p>This is the about section.</p>
+        </div>
+
+        <div id="contact" class="tab-content">
+            <h2>Contact</h2>
+            <p>This is the contact section.</p>
+        </div>
+
+        <div id="profile" class="tab-content">
+                        <div class="card">                <h1>Here is where you can edit you profile </h1>
+              
+                <br>
+                <input type="file" id="imageUpload" accept="image/*" />
+                <input type="text" id="nameInput" placeholder="Change your name" />
+
+        </div>
+    </div>
+
+    <script>
+        const links = document.querySelectorAll('.nav-link');
+        const tabs = document.querySelectorAll('.tab-content');
+        const navbar = document.querySelector('.navbar');
+        const sidebar = document.querySelector('.sidebar');
+
+        function switchTab(tabId) {
+            tabs.forEach(tab => tab.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function toggleVisibility(element, show) {
+            if (show) {
+                element.classList.remove('hidden');
+            } else {
+                element.classList.add('hidden');
+            }
+        }
+
+        links.forEach(link => {
+            link.addEventListener('click', event => {
+                event.preventDefault();
+                const tabId = link.getAttribute('data-tab');
+
+                if (window.innerWidth >= 1024) {
+                    toggleVisibility(navbar, false);
+                    toggleVisibility(sidebar, true);
+                } else {
+                    toggleVisibility(sidebar, false);
+                    toggleVisibility(navbar, true);
+                }
+
+                switchTab(tabId);
+            });
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 1024) {
+                toggleVisibility(navbar, false);
+                toggleVisibility(sidebar, true);
+            } else {
+                toggleVisibility(sidebar, false);
+                toggleVisibility(navbar, true);
+            }
+        });
+
+        // Initialize visibility based on screen size
+        if (window.innerWidth >= 1024) {
+            toggleVisibility(navbar, false);
+            toggleVisibility(sidebar, true);
+        } else {
+            toggleVisibility(sidebar, false);
+            toggleVisibility(navbar, true);
+        }
+
+        // Profile settings script
+        const params = new URLSearchParams(window.location.search);
+        const urlUsername = params.get("username");
+        const urlPhoto = params.get("photo");
+
+        const profileImage = document.getElementById("profileImage");
+        const usernameDisplay = document.getElementById("usernameDisplay");
+        const nameInput = document.getElementById("nameInput");
+
+        const savedImage = localStorage.getItem("profileImage");
+        const savedName = localStorage.getItem("username");
+
+        // Load saved or URL-based data
+        if (savedImage) {
+            profileImage.src = savedImage;
+        } else {
+            profileImage.src = urlPhoto || "https://via.placeholder.com/150";
+        }
+
+        if (savedName) {
+            usernameDisplay.textContent = savedName;
+            nameInput.value = savedName;
+        } else {
+            usernameDisplay.textContent = urlUsername || "User";
+            nameInput.value = urlUsername || "";
+        }
+
+        // Save new image
+        document.getElementById("imageUpload").addEventListener("change", function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imageData = e.target.result;
+                    profileImage.src = imageData;
+                    localStorage.setItem("profileImage", imageData);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Save new name
+        nameInput.addEventListener("input", function() {
+            const newName = nameInput.value.trim();
+            usernameDisplay.textContent = newName || "User";
+            localStorage.setItem("username", newName);
+        });
+    </script>
+</body>
+</html>
